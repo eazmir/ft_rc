@@ -19,18 +19,18 @@ struct sockaddr_in2
     char             sin_zero[8];  // Padding to make it the same size as sockaddr
 };
 
-struct pollfds
-{
-    int fds;
-    short events;
-    short reevnts;
-};
-
 struct client
 {
     int fd;
     std::string username;
 };
+
+struct poll_in
+{
+    int n;
+    std::vector<struct pollfd>fds;
+};
+
 
 class Server
 {
@@ -39,10 +39,18 @@ class Server
         std::string username;
         std::string message;
         std::string clinet;
-        size_t index;
+        std::string password;
+        int index;
+        bool pass_ok;
+        bool user_ok;
+        int registered;
     public:
-        Server(int _port);
-        int ft_multiplixing(int &fd_Server);
-        int parse_msg(std::string &str);
-        int parse_user(std::string &str);
+        Server(int _port,std::string passwod);
+        int ft_multiplexing(int &fd_Server,std::string password);
+        int ft_message(std::string &str);
+        int ft_username(std::string &str);
+        std::vector<struct pollfd> ft_init_poll(int &fd);
+        void ft_client(int newClinet,poll_in *p);
+        void ft_breadcast(int sender,std::string &str);
+        void ft_password(std::string &str);
 };
