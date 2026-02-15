@@ -6,6 +6,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string>
+#include <poll.h>
+#include <vector>
+#include <algorithm>
+#include <string>
 
 struct sockaddr_in2 
 {
@@ -22,12 +26,23 @@ struct pollfds
     short reevnts;
 };
 
+struct client
+{
+    int fd;
+    std::string username;
+};
 
 class Server
 {
     private:
-        // int short port;
+        std::vector<client> clients; 
+        std::string username;
+        std::string message;
+        std::string clinet;
+        size_t index;
     public:
         Server(int _port);
-        int ft_multiplixing(int fd);
+        int ft_multiplixing(int &fd_Server);
+        int parse_msg(std::string &str);
+        int parse_user(std::string &str);
 };

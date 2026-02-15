@@ -16,7 +16,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
-
+	./ircserv 8080 
 clean:
 	rm -f $(OBJS)
 
